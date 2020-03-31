@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Set List</title>
+
+	<script language="javascript">
+
+		var filterGenre = [];
+		var filterSongs = [];
+
+		// function computes which genres were chosen and outputs filtered songs
+		function filter()
+		{
+			for (i = 0; i < genres.options.length; i++)
+			{
+				if (genres.options[i].selected)
+				{
+					filterGenre.push(genres.options[i].text);
+				}
+			}
+
+			document.write("<h2>Filtered songs</h2>");
+
+			// displays the genre(s) chosen for filter
+			document.write("Chosen genre(s): ");
+			for(i = 0; i < filterGenre.length; i++)
+			{
+				document.write(filterGenre[i] + "  ");
+			}
+			document.write("<br><br>");
+
+			// compares to see if the songs in the original set list are of the chosen genre(s)
+			for (i = 0; i < filterGenre.length; i++)
+			{
+				for (j = 0; j < setlist.songs.length; j++)
+				{
+					if (setlist.songs[j].genre == filterGenre[i])
+					{
+						filterSongs.push(setlist.songs[j]);
+						// document.write(setlist.songs[i].title);
+					}
+				}
+			}
+
+			// user friendly format of filtered songs
+			for (i = 0; i < filterSongs.length; i++)
+			{
+				document.write(filterSongs[i].title.bold() + "<br>" 
+					          + "Artist: " + filterSongs[i].artist + "<br>" 
+					          + "Genre: " + filterSongs[i].genre + "<br>" 
+					          + "Released " + filterSongs[i].year + "<br>" + "<br>");
+			}
+
+		}
+	</script>
+
+
+</head>
+
+<body>
+
+	<h1>Assignment 9: Cover Band Set List</h1>
+
+	<script language="javascript">
+
+		// json object
+		setlist = 
+		{
+			"songs": 
+			[
+				{"title":"Kingdom Come", "artist":"Anna Bergendahl", "genre":"Pop", "year":"2020"},
+				{"title":"Glorious", "artist":"Cascada", "genre":"Dance", "year":"2013"},
+				{"title":"Goodbye (Shelter)", "artist":"Sanja Vučić ZAA", "genre":"Pop", "year":"2016"},
+				{"title":"Devil in Desguise", "artist":"Clödie", "genre":"Rock", "year":"2018"},
+				{"title":"Ballerina", "artist":"Malou Prytz", "genre":"Pop", "year":"2020"},
+				{"title":"Cherry Red", "artist":"Roxen", "genre":"Latin", "year":"2020"},
+				{"title":"Hero", "artist":"Charlotte Perrelli", "genre":"Pop", "year":"2008"},
+				{"title":"Wild", "artist":"Raylee", "genre":"Pop", "year":"2020"},
+				{"title":"Pray for Me", "artist":"Kristin Husøy", "genre":"Pop", "year":"2020"},
+				{"title":"Don't Start Now", "artist":"Dua Lipa", "genre":"Pop", "year":"2019"}
+			]
+		} 	// end json object
+
+
+		document.write("<h2>Serialize and display</h2>");
+		// stringify seralizes JSON object
+		strSetlist = JSON.stringify(setlist);
+		document.write (strSetlist + "<br>" + "<br>");
+
+		document.write("<h2>User friendly display</h2>")
+		// displays data in user friendly format
+		for (i = 0; i < setlist.songs.length; i++)
+		{
+			document.write(setlist.songs[i].title.bold() + "<br>" 
+				          + "Artist: " + setlist.songs[i].artist + "<br>" 
+				          + "Genre: " + setlist.songs[i].genre + "<br>" 
+				          + "Released " + setlist.songs[i].year + "<br>" + "<br>");
+		}
+
+	</script>
+
+	<h2>Filter the data</h2>
+
+	<!-- form to choose genre filter -->
+	<form>
+		<label for="genres">Filter by genre:</label><br>
+		<em>To choose multiple genres, hold the command key while selecting genres</em><br>
+		<select id="genres" name="genres" size="4" multiple>
+			<option value="pop">Pop</option>
+			<option value="dance">Dance</option>
+			<option value="rock">Rock</option>
+			<option value="latin">Latin</option>
+		</select>
+		<br>
+		<input type="button" value = "Submit" onclick="filter()">
+	</form>
+</body>
+</html>
